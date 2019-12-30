@@ -1,8 +1,10 @@
-# Ed's Calculator Web App
+![Repo card](branding/github_repo_card.jpg)
 
-A web-based calculator. Create as a project to practice my skills.
+# Ed's Calculator
 
 [![release-badge]][release] [![license-badge]][license]
+
+A web-based calculator. Create as a project to practice my skills.
 
 ## Changes
 
