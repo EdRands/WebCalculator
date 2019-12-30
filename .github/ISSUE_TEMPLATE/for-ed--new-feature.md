@@ -1,13 +1,10 @@
 ---
 name: 'For Ed: New Feature'
 about: Outline a new feature for the app
-title: ''
-labels: feature
+title: '[Feature] '
+labels: Feature
 assignees: EdRands
 
 ---
 
-Describe the feature.
-
-- [ ] Write tests
-- [ ] Further steps
+What are you adding here?
