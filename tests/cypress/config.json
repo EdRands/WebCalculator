@@ -6,5 +6,7 @@
   "pluginsFile": "tests/cypress/plugins/index.js",
   "supportFile": "tests/cypress/support/index.js",
   "screenshotsFolder": "tests/cypress/screenshots",
-  "videosFolder": "tests/cypress/videos"
+  "videosFolder": "tests/cypress/videos",
+  "viewportWidth": 427,
+  "viewportHeight": 757
 }
