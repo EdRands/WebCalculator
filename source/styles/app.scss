@@ -1,0 +1,263 @@
+@charset "utf-8";
+
+// Colors
+$light-text-color: #e6e6e6;
+$dark-text-color: #1a1a1a;
+$shadow-color: rgba(0, 0, 0, 0.3);
+
+$desktop-color: #3e2723;
+$calculator-color: #cfd8dc;
+
+$display-text-color: $dark-text-color;
+$display-background-color: #fafafa;
+
+$button-text-color: $dark-text-color;
+$button-background-color: #fafafa;
+$button-hover-text-color: $dark-text-color;
+$button-hover-background-color: #eeeeee;
+$button-shadow-shape: 1px 1px 2px 0px;
+$pressed-button-shadow-shape: 0px 0px 0px 0px;
+
+$operator-button-text-color: $dark-text-color;
+$operator-button-background-color: #2196f3;
+$operator-button-hover-text-color: $dark-text-color;
+$operator-button-hover-background-color: #1e88e5;
+
+$destructive-button-text-color: $dark-text-color;
+$destructive-button-background-color: #ffb300;
+$destructive-button-hover-text-color: $dark-text-color;
+$destructive-button-hover-background-color: #ffa000;
+
+$highly-destructive-button-text-color: $dark-text-color;
+$highly-destructive-button-background-color: #f44336;
+$highly-destructive-button-hover-text-color: $dark-text-color;
+$highly-destructive-button-hover-background-color: #e53935;
+
+// Sizes
+$button-size: 90px;
+$button-text-size: 40px;
+$display-text-size: 56px;
+$padding: 15px;
+$calculator-border-radius: 15px;
+$button-border-radius: 10px;
+$grid-columns: 4;
+
+// Mixins
+@mixin buttonColors(
+  $text-color,
+  $background-color,
+  $interact-text-color,
+  $interact-background-color
+) {
+  color: $text-color;
+  background-color: $background-color;
+  border: 1px outset $background-color;
+  border-radius: $button-border-radius;
+
+  &:hover {
+    color: $interact-text-color;
+    background-color: $interact-background-color;
+    border-color: $interact-background-color;
+  }
+
+  &:active {
+    box-shadow: $pressed-button-shadow-shape $shadow-color;
+  }
+}
+
+/* Define the "system" font family */
+@font-face {
+  font-family: system;
+  font-style: normal;
+  font-weight: 300;
+  src: local(".SFNSText-Light"), local(".HelveticaNeueDeskInterface-Light"),
+    local(".LucidaGrandeUI"), local("Ubuntu Light"), local("Segoe UI Light"),
+    local("Roboto-Light"), local("DroidSans"), local("Tahoma");
+}
+
+/* Now, let's apply it on an element */
+body {
+  font-family: "system";
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+body {
+  background-color: $desktop-color;
+  font-family: "system";
+}
+
+#calculator {
+  background-color: $calculator-color;
+  border: 1px outset $calculator-color;
+  border-radius: $calculator-border-radius;
+  box-shadow: 3px 3px 3px 0px $shadow-color;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 435px;
+}
+
+#display {
+  width: 100%;
+  height: $button-size;
+  font-size: $display-text-size;
+  color: $display-text-color;
+  background-color: $display-background-color;
+  text-align: right;
+  padding: $padding;
+  border: 1px inset $display-background-color;
+  border-radius: $button-border-radius;
+  box-shadow: inset 1px 1px 1px 0px $shadow-color;
+}
+
+#buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: $padding;
+  padding: $padding;
+}
+
+button {
+  width: $button-size;
+  height: $button-size;
+  font-size: $button-text-size;
+  box-shadow: $button-shadow-shape $shadow-color;
+  transition: box-shadow 0.1s ease-in-out;
+
+  @include buttonColors(
+    $button-text-color,
+    $button-background-color,
+    $button-hover-text-color,
+    $button-hover-background-color
+  );
+
+  &.operator {
+    @include buttonColors(
+      $operator-button-text-color,
+      $operator-button-background-color,
+      $operator-button-hover-text-color,
+      $operator-button-hover-background-color
+    );
+  }
+
+  &.destructive-operation {
+    @include buttonColors(
+      $destructive-button-text-color,
+      $destructive-button-background-color,
+      $destructive-button-hover-text-color,
+      $destructive-button-hover-background-color
+    );
+  }
+
+  &.highly-destructive-operation {
+    @include buttonColors(
+      $highly-destructive-button-text-color,
+      $highly-destructive-button-background-color,
+      $highly-destructive-button-hover-text-color,
+      $highly-destructive-button-hover-background-color
+    );
+  }
+}
+
+/* Button positions */
+
+@mixin buttonPosition($row, $column) {
+  grid-row-start: $row;
+  grid-column-start: $column;
+}
+
+#display {
+  grid-area: 1 / 1 / 1 / #{$grid-columns + 1};
+}
+
+#number1-button {
+  @include buttonPosition(5, 1);
+}
+
+#number2-button {
+  @include buttonPosition(5, 2);
+}
+
+#number3-button {
+  @include buttonPosition(5, 3);
+}
+
+#number4-button {
+  @include buttonPosition(4, 1);
+}
+
+#number5-button {
+  @include buttonPosition(4, 2);
+}
+
+#number6-button {
+  @include buttonPosition(4, 3);
+}
+
+#number7-button {
+  @include buttonPosition(3, 1);
+}
+
+#number8-button {
+  @include buttonPosition(3, 2);
+}
+
+#number9-button {
+  @include buttonPosition(3, 3);
+}
+
+#negative-toggle-button {
+  @include buttonPosition(6, 1);
+}
+
+#number0-button {
+  @include buttonPosition(6, 2);
+}
+
+#decimal-button {
+  @include buttonPosition(6, 3);
+}
+
+#equal-button {
+  @include buttonPosition(6, 4);
+}
+
+#add-button {
+  @include buttonPosition(5, 4);
+}
+
+#subtract-button {
+  @include buttonPosition(4, 4);
+}
+
+#multiple-button {
+  @include buttonPosition(3, 4);
+}
+
+#divide-button {
+  @include buttonPosition(2, 4);
+}
+
+#clear-all-button {
+  @include buttonPosition(2, 1);
+}
+
+#clear-entry-button {
+  @include buttonPosition(2, 2);
+}
+
+#backspace-button {
+  @include buttonPosition(2, 3);
+}
