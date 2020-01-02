@@ -19,10 +19,11 @@ describe("The Calculator App", function() {
     cy.title().should("include", "Calculator");
   });
 
-  it("shows the read-only input display", () => {
+  it("shows 0 in a read-only input display", () => {
     cy.get("#display")
       .should("be.visible")
       .and("have.attr", "readonly");
+    cy.get("#display").should("have.value", "0");
   });
 
   it("shows the button for number one", function() {
