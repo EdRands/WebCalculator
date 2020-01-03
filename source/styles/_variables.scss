@@ -1,5 +1,5 @@
 // Fonts
-$font-family: Montserrat, system-ui, san-serif;
+$font-family: Montserrat, system-ui, sans-serif;
 $font-weight: 400;
 
 // Colors and shapes.
@@ -37,9 +37,9 @@ $layout-rows: 6;
 $layout-columns: 4;
 $height-padding: 1vh;
 $width-padding: 1vw;
-$element-height: (100vh - ($height-padding * ($layout-rows + 1))) / $layout-rows;
 $element-width: (100vw - ($width-padding * ($layout-columns + 1))) /
   $layout-columns;
+$element-height: (100vh - ($height-padding * ($layout-rows + 1))) / $layout-rows;
 $button-text-size: $element-height * 0.3;
 $display-text-size: $element-height * 0.5;
 $calculator-border-radius: 15px;
