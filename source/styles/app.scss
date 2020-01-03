@@ -47,6 +47,7 @@ body {
   font-family: $font-family;
   font-weight: $font-weight;
   font-size: $display-text-size;
+  font-variant-numeric: lining-nums;
   color: $display-text-color;
   background-color: $display-background-color;
   text-align: right;
@@ -69,6 +70,7 @@ button {
   font-family: $font-family;
   font-weight: $font-weight;
   font-size: $button-text-size;
+  font-variant-numeric: lining-nums;
   box-shadow: $button-shadow;
   transition: box-shadow 0.1s ease-in-out;
 
