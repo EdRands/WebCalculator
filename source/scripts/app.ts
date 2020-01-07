@@ -28,7 +28,7 @@ class Calculator {
   /**
    * The HTML element used to display the current input.
    * */
-  private readonly displayElement: HTMLInputElement;
+  private readonly displayElement: HTMLInputElement = this.getDisplayElement();
 
   /**
    * The in-progress input.
@@ -45,55 +45,35 @@ class Calculator {
    * */
   private lastOperator: CalculatorFunctions;
 
+  private operationButtons = {
+    "#add-button": CalculatorFunctions.Add,
+    "#subtract-button": CalculatorFunctions.Subtract,
+    "#multiply-button": CalculatorFunctions.Multiply,
+    "#divide-button": CalculatorFunctions.Divide,
+    "#equals-button": CalculatorFunctions.Equals,
+    "#toggle-sign-button": CalculatorFunctions.ToggleSign,
+    "#backspace-button": CalculatorFunctions.Backspace,
+    "#clear-entry-button": CalculatorFunctions.ClearEntry,
+    "#clear-all-button": CalculatorFunctions.ClearAll,
+  };
+
   /**
    * Class constructor.
    * @constructor
    */
   constructor() {
     try {
-      this.displayElement = this.getDisplayElement("#display");
-
       for (let number = 0; number <= 9; number++) {
         this.attachClickEventToInputButton(number, `#number${number}-button`);
       }
       this.attachClickEventToInputButton(".", "#decimal-button");
 
-      this.attachClickEventToOperationButton(
-        CalculatorFunctions.Add,
-        "#add-button"
-      );
-      this.attachClickEventToOperationButton(
-        CalculatorFunctions.Subtract,
-        "#subtract-button"
-      );
-      this.attachClickEventToOperationButton(
-        CalculatorFunctions.Multiply,
-        "#multiply-button"
-      );
-      this.attachClickEventToOperationButton(
-        CalculatorFunctions.Divide,
-        "#divide-button"
-      );
-      this.attachClickEventToOperationButton(
-        CalculatorFunctions.Equals,
-        "#equals-button"
-      );
-      this.attachClickEventToOperationButton(
-        CalculatorFunctions.ToggleSign,
-        "#toggle-sign-button"
-      );
-      this.attachClickEventToOperationButton(
-        CalculatorFunctions.Backspace,
-        "#backspace-button"
-      );
-      this.attachClickEventToOperationButton(
-        CalculatorFunctions.ClearEntry,
-        "#clear-entry-button"
-      );
-      this.attachClickEventToOperationButton(
-        CalculatorFunctions.ClearAll,
-        "#clear-all-button"
-      );
+      for (const id in this.operationButtons) {
+        if (this.operationButtons.hasOwnProperty(id)) {
+          const operation = this.operationButtons[id];
+          this.attachClickEventToOperationButton(operation, id);
+        }
+      }
     } catch (Error) {
       console.error(Error.message);
     }
@@ -160,7 +140,8 @@ class Calculator {
    * @throws {Error} Will throw an error if the element is not of the type <input>.
    * @returns {HTMLInputElement} The <input> object.
    */
-  private getDisplayElement(id: string): HTMLInputElement {
+  private getDisplayElement(id?: string): HTMLInputElement {
+    if (!id) id = "#display";
     const display = this.getElement(id);
 
     if (display.nodeName !== "INPUT") {
@@ -218,13 +199,13 @@ class Calculator {
    * @param {number | string} appendage The input to append.
    */
   public appendToInput(appendage: number | string) {
-    if (typeof appendage === "number") {
-      appendage = appendage.toString();
-    }
+    if (typeof appendage === "number") appendage = appendage.toString();
 
     if (this.isNotValidInput(appendage)) {
       return;
-    } else if (appendage === ".") {
+    }
+
+    if (appendage === ".") {
       if (this.currentInput.indexOf(appendage) === -1) {
         this.setCurrentInput(this.currentInput + appendage);
       }
