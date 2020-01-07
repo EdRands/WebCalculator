@@ -101,33 +101,33 @@ describe("The Calculator App", () => {
     cy.get("#display").should("have.value", "1.23");
   });
 
-  it("toggles negativity when the Positive/Negative button is activated", () => {
+  it("toggles the sign when the Toggle Sign button is activated", () => {
     // No effect upon 0
-    cy.get("#negative-toggle-button").click();
+    cy.get("#toggle-sign-button").click();
     cy.get("#display").should("have.value", "0");
 
     // Single digit
     cy.get("#number1-button").click();
-    cy.get("#negative-toggle-button").click();
+    cy.get("#toggle-sign-button").click();
     cy.get("#display").should("have.value", "-1");
-    cy.get("#negative-toggle-button").click();
+    cy.get("#toggle-sign-button").click();
     cy.get("#display").should("have.value", "1");
 
     // Multiple digits
     cy.get("#number2-button").click();
     cy.get("#number3-button").click();
-    cy.get("#negative-toggle-button").click();
+    cy.get("#toggle-sign-button").click();
     cy.get("#display").should("have.value", "-123");
-    cy.get("#negative-toggle-button").click();
+    cy.get("#toggle-sign-button").click();
     cy.get("#display").should("have.value", "123");
 
     // Floating point
     cy.get("#decimal-button").click();
     cy.get("#number4-button").click();
     cy.get("#number5-button").click();
-    cy.get("#negative-toggle-button").click();
+    cy.get("#toggle-sign-button").click();
     cy.get("#display").should("have.value", "-123.45");
-    cy.get("#negative-toggle-button").click();
+    cy.get("#toggle-sign-button").click();
     cy.get("#display").should("have.value", "123.45");
   });
 
@@ -168,5 +168,18 @@ describe("The Calculator App", () => {
     cy.get("#display").should("have.value", "0");
   });
 
-  // TODO: Test Clear All button
+  it("removes all inputs when the Clear All button is activated", () => {
+    cy.get("#number1-button").click();
+    cy.get("#add-button").click();
+    cy.get("#number1-button").click();
+    cy.get("#equals-button").click();
+    cy.get("#display").should("have.value", "2");
+
+    cy.get("#clear-all-button").click();
+    cy.get("#display").should("have.value", "0");
+    cy.get("#number1-button").click();
+    cy.get("#display").should("have.value", "1");
+    cy.get("#equals-button").click();
+    cy.get("#display").should("have.value", "1");
+  });
 });

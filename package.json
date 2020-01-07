@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "cypress": "^3.8.1",
+    "decimal.js": "^10.2.0",
     "http-server": "^0.12.0",
     "parcel-bundler": "^1.12.4",
     "sass": "^1.24.0",

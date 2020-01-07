@@ -6,7 +6,17 @@
 
 "use strict";
 
-import { RegExp } from "core-js";
+import { Decimal } from "decimal.js";
+
+enum CalculatorOperators {
+  None = "",
+  Add = "+",
+  Subtract = "−",
+  Multiply = "×",
+  Divide = "÷",
+  Equal = "=",
+  ToggleSign = "±",
+}
 
 /**
  * Creates a new Calculator.
@@ -16,7 +26,7 @@ class Calculator {
   /**
    * The HTML element used to display the current input.
    * */
-  private displayElement: HTMLInputElement = document.getElementById(
+  private readonly displayElement: HTMLInputElement = document.getElementById(
     "display"
   ) as HTMLInputElement;
 
@@ -24,6 +34,16 @@ class Calculator {
    * The in-progress input.
    * */
   private currentInput: string = "0";
+
+  /**
+   * The previous input.
+   * */
+  private previousInput: Decimal = null;
+
+  /**
+   * The math operation in queue.
+   * */
+  private LastOperator: CalculatorOperators;
 
   /**
    * Class constructor.
@@ -35,9 +55,15 @@ class Calculator {
       this.attachClickEventToNumberButton(number);
     }
     this.attachClickEventToDecimalButton();
-    this.attachClickEventToNegativeToggleButton();
+    this.attachClickEventToSignToggleButton();
     this.attachClickEventToBackspaceButton();
     this.attachClickEventToClearEntryButton();
+    this.attachClickEventToClearAllButton();
+    this.attachClickEventToEqualsButton();
+    this.attachClickEventToAddButton();
+    this.attachClickEventToSubtractButton();
+    this.attachClickEventToMultiplyButton();
+    this.attachClickEventToDivideButton();
 
     // Update the input display
     this.updateDisplay();
@@ -53,6 +79,21 @@ class Calculator {
     this.currentInput = newInput;
     this.updateDisplay();
     return this.currentInput;
+  }
+
+  /**
+   * Clears the current input.
+   */
+  public clearCurrentInput() {
+    this.setCurrentInput("0");
+  }
+
+  /**
+   * Clears all the inputs.
+   */
+  public clearAllInputs() {
+    this.previousInput = null;
+    this.setCurrentInput("0");
   }
 
   /**
@@ -99,10 +140,10 @@ class Calculator {
   /**
    * Attach the click event to the Negative/Positive toggle button.
    */
-  private attachClickEventToNegativeToggleButton() {
-    const button = this.getButtonElement("negative-toggle-button");
+  private attachClickEventToSignToggleButton() {
+    const button = this.getButtonElement("toggle-sign-button");
     button.addEventListener("click", () => {
-      calculator.toggleNegative();
+      calculator.toggleSign();
     });
   }
 
@@ -123,6 +164,66 @@ class Calculator {
     const button = this.getButtonElement("clear-entry-button");
     button.addEventListener("click", () => {
       calculator.clearCurrentInput();
+    });
+  }
+
+  /**
+   * Attach the click event to the Clear Entry toggle button.
+   */
+  private attachClickEventToClearAllButton() {
+    const button = this.getButtonElement("clear-all-button");
+    button.addEventListener("click", () => {
+      calculator.clearAllInputs();
+    });
+  }
+
+  /**
+   * Attach the click event to the Equals operation button.
+   */
+  private attachClickEventToEqualsButton() {
+    const button = this.getButtonElement("equals-button");
+    button.addEventListener("click", () => {
+      calculator.equals();
+    });
+  }
+
+  /**
+   * Attach the click event to the Addition operation button.
+   */
+  private attachClickEventToAddButton() {
+    const button = this.getButtonElement("add-button");
+    button.addEventListener("click", () => {
+      calculator.addition();
+    });
+  }
+
+  /**
+   * Attach the click event to the Subtraction operation button.
+   */
+  private attachClickEventToSubtractButton() {
+    const button = this.getButtonElement("subtract-button");
+    button.addEventListener("click", () => {
+      calculator.subtraction();
+    });
+  }
+
+  /**
+   * Attach the click event to the Multiplication operation button.
+   */
+  private attachClickEventToMultiplyButton() {
+    const button = this.getButtonElement("multiply-button");
+    button.addEventListener("click", () => {
+      calculator.multiply();
+    });
+  }
+
+  /**
+   * Attach the click event to the Division operation button.
+   */
+  private attachClickEventToDivideButton() {
+    const button = this.getButtonElement("divide-button");
+    button.addEventListener("click", () => {
+      calculator.divide();
     });
   }
 
@@ -164,7 +265,7 @@ class Calculator {
   /**
    * Toggle the negativity of the current input.
    */
-  public toggleNegative() {
+  public toggleSign() {
     let input = parseFloat(this.currentInput);
 
     if (isNaN(input)) {
@@ -192,10 +293,72 @@ class Calculator {
   }
 
   /**
-   * Clears the current input.
+   * Shift current input to previous input.
    */
-  public clearCurrentInput() {
-    this.setCurrentInput("0");
+  shiftInputs() {
+    this.previousInput = new Decimal(this.currentInput);
+    this.clearCurrentInput();
+  }
+
+  /**
+   * Total two numbers together.
+   */
+  public equals() {
+    // Do nothing if there is no other number
+    if (this.previousInput === null) {
+      return;
+    }
+
+    let result: Decimal;
+
+    switch (this.LastOperator) {
+      case CalculatorOperators.Add:
+        result = this.previousInput.plus(this.currentInput);
+        break;
+      case CalculatorOperators.Subtract:
+        result = this.previousInput.minus(this.currentInput);
+        break;
+      case CalculatorOperators.Multiply:
+        result = this.previousInput.times(this.currentInput);
+        break;
+      case CalculatorOperators.Divide:
+        result = this.previousInput.dividedBy(this.currentInput);
+        break;
+    }
+
+    this.setCurrentInput(result.toString());
+  }
+
+  /**
+   * Prepare to add numbers together.
+   */
+  public addition() {
+    this.LastOperator = CalculatorOperators.Add;
+    this.shiftInputs();
+  }
+
+  /**
+   * Prepare to subtract numbers from each other.
+   */
+  public subtraction() {
+    this.LastOperator = CalculatorOperators.Subtract;
+    this.shiftInputs();
+  }
+
+  /**
+   * Prepare to multiply numbers.
+   */
+  public multiply() {
+    this.LastOperator = CalculatorOperators.Multiply;
+    this.shiftInputs();
+  }
+
+  /**
+   * Prepare to divide numbers.
+   */
+  public divide() {
+    this.LastOperator = CalculatorOperators.Divide;
+    this.shiftInputs();
   }
 }
 

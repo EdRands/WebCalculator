@@ -122,8 +122,8 @@ describe("The Calculator App", () => {
       .and("contain.text", "=");
   });
 
-  it("shows the button to toggle negative/positive", () => {
-    cy.get("#negative-toggle-button")
+  it("shows the button to toggle the sign", () => {
+    cy.get("#toggle-sign-button")
       .should("be.visible")
       .and("contain.text", "±");
   });
