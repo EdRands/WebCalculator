@@ -1,0 +1,51 @@
+// Fonts
+$font-family: Montserrat, system-ui, sans-serif;
+$font-weight: 400;
+
+// Colors and shapes.
+$light-text-color: #e6e6e6;
+$dark-text-color: #1a1a1a;
+
+$desktop-color: #3e2723;
+$calculator-color: #cfd8dc;
+
+$display-text-color: $dark-text-color;
+$display-background-color: #fafafa;
+
+$button-text-color: $dark-text-color;
+$button-background-color: #fafafa;
+$button-hover-text-color: $dark-text-color;
+$button-hover-background-color: #eeeeee;
+
+$operator-button-text-color: $dark-text-color;
+$operator-button-background-color: #2196f3;
+$operator-button-hover-text-color: $dark-text-color;
+$operator-button-hover-background-color: #1e88e5;
+
+$destructive-button-text-color: $dark-text-color;
+$destructive-button-background-color: #ffb300;
+$destructive-button-hover-text-color: $dark-text-color;
+$destructive-button-hover-background-color: #ffa000;
+
+$highly-destructive-button-text-color: $dark-text-color;
+$highly-destructive-button-background-color: #f44336;
+$highly-destructive-button-hover-text-color: $dark-text-color;
+$highly-destructive-button-hover-background-color: #e53935;
+
+/* Sizes */
+$layout-rows: 6;
+$layout-columns: 4;
+$height-padding: 1vh;
+$width-padding: 1vw;
+$element-width: (100vw - ($width-padding * ($layout-columns + 1))) /
+  $layout-columns;
+$element-height: (100vh - ($height-padding * ($layout-rows + 1))) / $layout-rows;
+$button-text-size: $element-height * 0.3;
+$display-text-size: $element-height * 0.5;
+$calculator-border-radius: 15px;
+$button-border-radius: 1vmax;
+
+// Shadows
+$shadow-color: rgba(0, 0, 0, 0.3);
+$button-shadow: 1px 1px 2px 0px $shadow-color;
+$active-button-shadow: 0px 0px 0px 0px $shadow-color;

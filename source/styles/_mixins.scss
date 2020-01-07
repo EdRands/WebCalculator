@@ -1,0 +1,35 @@
+// Creates the colors for a button and its various states.
+//
+// :hover - Subtle hover darkening.
+@mixin buttonColors(
+  $text-color,
+  $background-color,
+  $interact-text-color,
+  $interact-background-color
+) {
+  color: $text-color;
+  background-color: $background-color;
+  border: 1px outset $background-color;
+  border-radius: $button-border-radius;
+
+  &:hover,
+  &:focus {
+    color: $interact-text-color;
+    background-color: $interact-background-color;
+    border-color: $interact-background-color;
+  }
+
+  &:focus {
+    outline-width: 0;
+    outline-style: none;
+  }
+}
+
+// Sets the position in the grid for a single button.
+//
+// $row    - The row in which to place the button.
+// $column - The column in which to place the button.
+@mixin buttonPosition($row, $column) {
+  grid-row-start: $row;
+  grid-column-start: $column;
+}

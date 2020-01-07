@@ -10,8 +10,38 @@
   </head>
 
   <body>
-    <p>The calculator goes here.</p>
+    <main id="calculator">
+      <section id="buttons">
+        <input type="text" id="display" value="" readonly />
+        <button id="number1-button" tabindex="1">1</button>
+        <button id="number2-button" tabindex="2">2</button>
+        <button id="number3-button" tabindex="3">3</button>
+        <button id="number4-button" tabindex="4">4</button>
+        <button id="number5-button" tabindex="5">5</button>
+        <button id="number6-button" tabindex="6">6</button>
+        <button id="number7-button" tabindex="7">7</button>
+        <button id="number8-button" tabindex="8">8</button>
+        <button id="number9-button" tabindex="9">9</button>
+        <button id="number0-button" tabindex="10">0</button>
+        <button id="decimal-button" tabindex="11">.</button>
+        <button id="clear-all-button" class="highly-destructive-operation">
+          C
+        </button>
+        <button id="clear-entry-button" class="destructive-operation">
+          CE
+        </button>
+        <button id="backspace-button" class="destructive-operation">
+          &larr;
+        </button>
+        <button id="toggle-sign-button">&plusmn;</button>
+        <button id="add-button" class="operator">&plus;</button>
+        <button id="subtract-button" class="operator">&minus;</button>
+        <button id="multiply-button" class="operator">&times;</button>
+        <button id="divide-button" class="operator">&divide;</button>
+        <button id="equals-button" class="operator">&equals;</button>
+      </section>
+    </main>
 
-    <script src="scripts/app.js"></script>
+    <script src="scripts/app.ts"></script>
   </body>
 </html>

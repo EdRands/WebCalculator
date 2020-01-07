@@ -1,27 +1,34 @@
 {
-	"name": "eds-calulator-web-app",
-	"version": "0.0.0",
-	"description": "Calculator web app. Built as a a practice project.",
-	"keywords": ["calculator", "practice", "web-app"],
-	"repository": "github:EdRands/WebAppTemplate",
-	"author": "Ed Rands <erands@gmail.com>",
-	"license": "MIT",
-	"private": true,
-	"scripts": {
-		"test": "start-server-and-test serve:silent http://localhost:2020 test:run",
-		"test:run": "cypress run --config-file tests/cypress/config.json",
-		"test:live": "cypress open --config-file tests/cypress/config.json",
-		"build": "parcel build source/index.html --out-dir public",
-		"serve": "http-server --port 2020",
-		"serve:silent": "http-server --port 2020 --silent",
-		"serve:live": "parcel source/index.html --out-dir build --port 2020",
-		"develop": "start-server-and-test serve:live http://localhost:2020 test:live"
-	},
-	"devDependencies": {
-		"cypress": "^3.8.1",
-		"http-server": "^0.12.0",
-		"parcel-bundler": "^1.12.4",
-		"sass": "^1.24.0",
-		"start-server-and-test": "^1.10.6"
-	}
+  "name": "eds-calulator-web-app",
+  "version": "0.0.0",
+  "description": "Calculator web app. Built as a a practice project.",
+  "keywords": [
+    "calculator",
+    "practice",
+    "web-app"
+  ],
+  "repository": "github:EdRands/WebAppTemplate",
+  "author": "Ed Rands <erands@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "test": "start-server-and-test serve:silent http://localhost:2020 test:run",
+    "test:run": "cypress run --config-file tests/cypress/config.json",
+    "test:live": "cypress open --config-file tests/cypress/config.json",
+    "build": "parcel build source/index.html --out-dir public",
+    "serve": "http-server --port 2020",
+    "serve:silent": "http-server --port 2020 --silent",
+    "serve:live": "parcel source/index.html --out-dir build --port 2020",
+    "develop": "start-server-and-test serve:live http://localhost:2020 test:live"
+  },
+  "devDependencies": {
+    "cypress": "^3.8.1",
+    "decimal.js": "^10.2.0",
+    "http-server": "^0.12.0",
+    "parcel-bundler": "^1.12.4",
+    "sass": "^1.24.0",
+    "start-server-and-test": "^1.10.6",
+    "system-font-css": "^2.0.2",
+    "typescript": "^3.7.4"
+  }
 }

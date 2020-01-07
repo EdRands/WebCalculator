@@ -1,0 +1,199 @@
+/*!
+ * Ed's Calculator (https://github.com/EdRands/WebCalculator)
+ * Copyright (c) 2019-2020 Ed Rands
+ * Licensed under MIT (https://github.com/EdRands/WebCalculator/blob/master/LICENSE)
+ */
+
+@import "../../node_modules/system-font-css/_system-font.scss";
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400&display=swap&text=1234567890.+−×÷=±←");
+@import "_variables.scss";
+@import "_mixins.scss";
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+body {
+  background-color: $desktop-color;
+  font-family: $font-family;
+  font-weight: $font-weight;
+}
+
+#calculator {
+  background-color: $calculator-color;
+  width: 100%;
+  height: 100%;
+  padding: $height-padding $width-padding;
+  // border: 1px outset $calculator-color;
+  // border-radius: $calculator-border-radius;
+  // box-shadow: 3px 3px 3px 0px $shadow-color;
+  // position: absolute;
+  // top: 50%;
+  // left: 50%;
+  // transform: translate(-50%, -50%);
+}
+
+#display {
+  width: 100%;
+  height: $element-height;
+  font-family: $font-family;
+  font-weight: $font-weight;
+  font-size: $display-text-size;
+  font-variant-numeric: lining-nums;
+  color: $display-text-color;
+  background-color: $display-background-color;
+  text-align: right;
+  padding: 15px;
+  border: 1px inset $display-background-color;
+  border-radius: $button-border-radius;
+  box-shadow: inset 1px 1px 1px 0px $shadow-color;
+}
+
+#buttons {
+  display: grid;
+  grid-template-columns: repeat($layout-columns, 1fr);
+  grid-gap: $height-padding $width-padding;
+  padding: 0;
+}
+
+button {
+  width: $element-width;
+  height: $element-height;
+  font-family: $font-family;
+  font-weight: $font-weight;
+  font-size: $button-text-size;
+  font-variant-numeric: lining-nums;
+  box-shadow: $button-shadow;
+  transition: box-shadow 0.1s ease-in-out;
+
+  @include buttonColors(
+    $button-text-color,
+    $button-background-color,
+    $button-hover-text-color,
+    $button-hover-background-color
+  );
+
+  &:active {
+    box-shadow: $active-button-shadow;
+  }
+
+  &.operator {
+    @include buttonColors(
+      $operator-button-text-color,
+      $operator-button-background-color,
+      $operator-button-hover-text-color,
+      $operator-button-hover-background-color
+    );
+  }
+
+  &.destructive-operation {
+    @include buttonColors(
+      $destructive-button-text-color,
+      $destructive-button-background-color,
+      $destructive-button-hover-text-color,
+      $destructive-button-hover-background-color
+    );
+  }
+
+  &.highly-destructive-operation {
+    @include buttonColors(
+      $highly-destructive-button-text-color,
+      $highly-destructive-button-background-color,
+      $highly-destructive-button-hover-text-color,
+      $highly-destructive-button-hover-background-color
+    );
+  }
+}
+
+// Component positions.
+#display {
+  grid-area: 1 / 1 / 1 / #{$layout-columns + 1};
+}
+
+#number1-button {
+  @include buttonPosition(5, 1);
+}
+
+#number2-button {
+  @include buttonPosition(5, 2);
+}
+
+#number3-button {
+  @include buttonPosition(5, 3);
+}
+
+#number4-button {
+  @include buttonPosition(4, 1);
+}
+
+#number5-button {
+  @include buttonPosition(4, 2);
+}
+
+#number6-button {
+  @include buttonPosition(4, 3);
+}
+
+#number7-button {
+  @include buttonPosition(3, 1);
+}
+
+#number8-button {
+  @include buttonPosition(3, 2);
+}
+
+#number9-button {
+  @include buttonPosition(3, 3);
+}
+
+#toggle-sign-button {
+  @include buttonPosition(6, 1);
+}
+
+#number0-button {
+  @include buttonPosition(6, 2);
+}
+
+#decimal-button {
+  @include buttonPosition(6, 3);
+}
+
+#equals-button {
+  @include buttonPosition(6, 4);
+}
+
+#add-button {
+  @include buttonPosition(5, 4);
+}
+
+#subtract-button {
+  @include buttonPosition(4, 4);
+}
+
+#multiply-button {
+  @include buttonPosition(3, 4);
+}
+
+#divide-button {
+  @include buttonPosition(2, 4);
+}
+
+#clear-all-button {
+  @include buttonPosition(2, 1);
+}
+
+#clear-entry-button {
+  @include buttonPosition(2, 2);
+}
+
+#backspace-button {
+  @include buttonPosition(2, 3);
+}
