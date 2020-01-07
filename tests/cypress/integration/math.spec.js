@@ -136,4 +136,21 @@ describe("The Calculator App", () => {
     cy.get("#equals-button").click();
     cy.get("#display").should("have.value", "7.5");
   });
+
+  it("handles dividing by 0", () => {
+    cy.get("#number3-button").click();
+    cy.get("#divide-button").click();
+    cy.get("#number0-button").click();
+    cy.get("#equals-button").click();
+    cy.get("#display").should("have.value", "Infinity");
+
+    cy.get("#clear-all-button").click();
+
+    cy.get("#number3-button").click();
+    cy.get("#toggle-sign-button").click();
+    cy.get("#divide-button").click();
+    cy.get("#number0-button").click();
+    cy.get("#equals-button").click();
+    cy.get("#display").should("have.value", "-Infinity");
+  });
 });
