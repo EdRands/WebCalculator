@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json.schemastore.org/eslintrc",
+  "plugins": ["cypress", "chai-friendly"],
+  "extends": ["plugin:cypress/recommended", "plugin:chai-friendly/recommended"],
+  "env": {
+    "node": true
+  },
+  "rules": {
+    "cypress/assertion-before-screenshot": "warn",
+    "@typescript-eslint/explicit-function-return-type": "off"
+  }
+}
