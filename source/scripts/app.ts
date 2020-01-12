@@ -4,11 +4,11 @@
  * Licensed under MIT (https://github.com/EdRands/WebCalculator/blob/master/LICENSE)
  */
 
-"use strict";
+'use strict'
 
-import { Decimal } from "decimal.js";
+import { Decimal } from 'decimal.js'
 
-const enum CalculatorFunctions {
+const enum calculatorFunctions {
   Add,
   Subtract,
   Multiply,
@@ -28,58 +28,61 @@ class Calculator {
   /**
    * The HTML element used to display the current input.
    * */
-  private readonly displayElement: HTMLInputElement = this.getDisplayElement();
+  private readonly displayElement: HTMLInputElement = this.getDisplayElement()
 
   /**
    * The in-progress input.
    * */
-  private currentInput: string = "0";
+  private currentInput = '0'
 
   /**
    * The previous input.
    * */
-  private previousInput: Decimal = null;
+  private previousInput: Decimal = null
 
   /**
    * The math operation in queue.
    * */
-  private lastOperator: CalculatorFunctions;
+  private lastOperator: calculatorFunctions = null
 
-  private operationButtons = {
-    "#add-button": CalculatorFunctions.Add,
-    "#subtract-button": CalculatorFunctions.Subtract,
-    "#multiply-button": CalculatorFunctions.Multiply,
-    "#divide-button": CalculatorFunctions.Divide,
-    "#equals-button": CalculatorFunctions.Equals,
-    "#toggle-sign-button": CalculatorFunctions.ToggleSign,
-    "#backspace-button": CalculatorFunctions.Backspace,
-    "#clear-entry-button": CalculatorFunctions.ClearEntry,
-    "#clear-all-button": CalculatorFunctions.ClearAll,
-  };
+  private readonly operationButtons = {
+    '#add-button': calculatorFunctions.Add,
+    '#subtract-button': calculatorFunctions.Subtract,
+    '#multiply-button': calculatorFunctions.Multiply,
+    '#divide-button': calculatorFunctions.Divide,
+    '#equals-button': calculatorFunctions.Equals,
+    '#toggle-sign-button': calculatorFunctions.ToggleSign,
+    '#backspace-button': calculatorFunctions.Backspace,
+    '#clear-entry-button': calculatorFunctions.ClearEntry,
+    '#clear-all-button': calculatorFunctions.ClearAll,
+  }
 
   /**
    * Class constructor.
    * @constructor
    */
-  constructor() {
-    try {
-      for (let number = 0; number <= 9; number++) {
-        this.attachClickEventToInputButton(number, `#number${number}-button`);
-      }
-      this.attachClickEventToInputButton(".", "#decimal-button");
 
-      for (const id in this.operationButtons) {
-        if (this.operationButtons.hasOwnProperty(id)) {
-          const operation = this.operationButtons[id];
-          this.attachClickEventToOperationButton(operation, id);
-        }
-      }
-    } catch (Error) {
-      console.error(Error.message);
-    }
+  constructor() {
+    this.attachClickEvents()
 
     // Update the input display
-    this.updateDisplay();
+    this.updateDisplay()
+  }
+
+  public attachClickEvents(): void {
+    try {
+      for (let number = 0; number <= 9; number++) {
+        this.attachClickEventToInputButton(number, `#number${number}-button`)
+      }
+      this.attachClickEventToInputButton('.', '#decimal-button')
+
+      for (const id in this.operationButtons) {
+        const operation = this.operationButtons[id]
+        this.attachClickEventToOperationButton(operation, id)
+      }
+    } catch (Error) {
+      console.error(Error.message)
+    }
   }
 
   /**
@@ -87,24 +90,24 @@ class Calculator {
    *
    * @param {string|number|Decimal} newInput The new input to replace the old input.
    */
-  public setCurrentInput(newInput: string | number | Decimal) {
-    if (newInput === "") {
-      newInput = "0";
+  public setCurrentInput(newInput: string | number | Decimal): void {
+    if (newInput === '') {
+      newInput = '0'
     }
 
-    if (typeof newInput === "number" || newInput instanceof Decimal) {
-      newInput = newInput.toString();
+    if (typeof newInput !== 'string') {
+      newInput = newInput.toString()
     }
 
-    this.currentInput = newInput;
-    this.updateDisplay();
+    this.currentInput = newInput
+    this.updateDisplay()
   }
 
   /**
    * Clears the current input.
    */
-  private clearCurrentInput() {
-    this.setCurrentInput("");
+  private clearCurrentInput(): void {
+    this.setCurrentInput('')
   }
 
   /**
@@ -112,8 +115,8 @@ class Calculator {
    * @returns {string} The value of the display input element.
    */
   private updateDisplay(): string {
-    this.displayElement.value = this.currentInput;
-    return this.displayElement.value;
+    this.displayElement.value = this.currentInput
+    return this.displayElement.value
   }
 
   /**
@@ -123,15 +126,15 @@ class Calculator {
    * @returns {HTMLElement}
    */
   private getElement(id: string): HTMLElement {
-    if (id.charAt(0) === "#") id = id.substr(1);
+    if (id.charAt(0) === '#') id = id.substr(1)
 
-    const element = document.getElementById(id);
+    const element = document.getElementById(id)
 
     if (element === null) {
-      throw new Error(`Unable to find element with an ID of '#${id}'.`);
+      throw new Error(`Unable to find element with an ID of '#${id}'.`)
     }
 
-    return element;
+    return element
   }
 
   /**
@@ -141,14 +144,14 @@ class Calculator {
    * @returns {HTMLInputElement} The <input> object.
    */
   private getDisplayElement(id?: string): HTMLInputElement {
-    if (!id) id = "#display";
-    const display = this.getElement(id);
+    if (!id) id = '#display'
+    const display = this.getElement(id)
 
-    if (display.nodeName !== "INPUT") {
-      throw new Error(`${id} is not an <input>.`);
+    if (display.nodeName !== 'INPUT') {
+      throw new Error(`${id} is not an <input>.`)
     }
 
-    return display as HTMLInputElement;
+    return display as HTMLInputElement
   }
 
   /**
@@ -156,31 +159,27 @@ class Calculator {
    * @param {number|string} input The number the button represents.
    * @param {string} The ID of the element to which we attach the click event.
    */
-  private attachClickEventToInputButton(
-    input: number | string,
-    element: string
-  ) {
-    const button = this.getElement(element);
+  private attachClickEventToInputButton(input: number | string, element: string): void {
+    const button = this.getElement(element)
 
     button.onclick = () => {
-      calculator.appendToInput(input);
-    };
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
+      calculator.appendToInput(input)
+    }
   }
 
   /**
    * Attach a click event to an operation button.
-   * @param {CalculatorFunctions} operation The operation the button represents.
+   * @param {calculatorFunctions} operation The operation the button represents.
    * @param {string} The ID of the element to which we attach the click event.
    */
-  private attachClickEventToOperationButton(
-    operation: CalculatorFunctions,
-    element: string
-  ) {
-    const button = this.getElement(element);
+  private attachClickEventToOperationButton(operation: calculatorFunctions, element: string): void {
+    const button = this.getElement(element)
 
     button.onclick = () => {
-      calculator.operation(operation);
-    };
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
+      calculator.operation(operation)
+    }
   }
 
   /**
@@ -189,132 +188,129 @@ class Calculator {
    * @returns {boolean} Returns false if the input is valid, otherwise returns false.
    */
   private isNotValidInput(input: string): boolean {
-    const testRegEx = /^[0-9.]$/m;
-    if (testRegEx.test(input)) return false;
-    else return true;
+    const testRegEx = /^[0-9.]$/m
+    if (testRegEx.test(input)) return false
+    else return true
   }
 
   /**
    * Append to the current input.
    * @param {number | string} appendage The input to append.
    */
-  public appendToInput(appendage: number | string) {
-    if (typeof appendage === "number") appendage = appendage.toString();
+  public appendToInput(appendage: number | string): void {
+    if (typeof appendage === 'number') appendage = appendage.toString()
 
     if (this.isNotValidInput(appendage)) {
-      return;
+      return
     }
 
-    if (appendage === ".") {
+    if (appendage === '.') {
       if (this.currentInput.indexOf(appendage) === -1) {
-        this.setCurrentInput(this.currentInput + appendage);
+        this.setCurrentInput(this.currentInput + appendage)
       }
-    } else if (this.currentInput == "0") {
-      this.setCurrentInput(appendage);
+    } else if (this.currentInput === '0') {
+      this.setCurrentInput(appendage)
     } else {
-      this.setCurrentInput(this.currentInput + appendage);
+      this.setCurrentInput(this.currentInput + appendage)
     }
   }
 
   /**
    * Perform an operation.
-   * @param {CalculatorFunctions} operation The operation to perform.
+   * @param {calculatorFunctions} operation The operation to perform.
    */
-  public operation(operation: CalculatorFunctions) {
+  public operation(operation: calculatorFunctions): void {
     switch (operation) {
-      case CalculatorFunctions.Add:
-      case CalculatorFunctions.Subtract:
-      case CalculatorFunctions.Multiply:
-      case CalculatorFunctions.Divide:
-        this.lastOperator = operation;
-        this.shiftInputs();
-        break;
-      case CalculatorFunctions.Equals:
-        this.equals();
-        break;
-      case CalculatorFunctions.ToggleSign:
-        this.toggleSign();
-        break;
-      case CalculatorFunctions.Backspace:
-        this.removeLastCharacterFromInput();
-        break;
-      case CalculatorFunctions.ClearAll:
-        this.previousInput = null;
-      case CalculatorFunctions.ClearEntry:
-        this.clearCurrentInput();
-        break;
-
-      default:
-        break;
+      case calculatorFunctions.Add:
+      case calculatorFunctions.Subtract:
+      case calculatorFunctions.Multiply:
+      case calculatorFunctions.Divide:
+        this.lastOperator = operation
+        this.shiftInputs()
+        break
+      case calculatorFunctions.Equals:
+        this.equals()
+        break
+      case calculatorFunctions.ToggleSign:
+        this.toggleSign()
+        break
+      case calculatorFunctions.Backspace:
+        this.removeLastCharacterFromInput()
+        break
+      case calculatorFunctions.ClearAll:
+        this.lastOperator = null
+        this.previousInput = null
+        this.clearCurrentInput()
+        break
+      case calculatorFunctions.ClearEntry:
+        this.clearCurrentInput()
+        break
     }
   }
 
   /**
    * Toggle the sign of the current input.
    */
-  private toggleSign() {
-    let input = parseFloat(this.currentInput);
+  private toggleSign(): void {
+    let input = parseFloat(this.currentInput)
 
-    if (isNaN(input)) {
-      return;
-    } else if (input > 0) {
-      input = -Math.abs(input);
-      this.setCurrentInput(input);
+    if (input > 0) {
+      input = -Math.abs(input)
+      this.setCurrentInput(input)
     } else if (input < 0) {
-      input = Math.abs(input);
-      this.setCurrentInput(input);
+      input = Math.abs(input)
+      this.setCurrentInput(input)
     }
   }
 
   /**
    * Remove the most recent character from the current input.
    */
-  public removeLastCharacterFromInput() {
-    let newInput = this.currentInput.slice(0, -1);
+  public removeLastCharacterFromInput(): void {
+    const newInput = this.currentInput.slice(0, -1)
 
-    if (newInput == "") {
-      this.setCurrentInput("0");
+    if (newInput === '') {
+      this.setCurrentInput('0')
     } else {
-      this.setCurrentInput(newInput);
+      this.setCurrentInput(newInput)
     }
   }
 
   /**
    * Shift current input to previous input.
    */
-  private shiftInputs() {
-    this.previousInput = new Decimal(this.currentInput);
-    this.clearCurrentInput();
+  private shiftInputs(): void {
+    this.previousInput = new Decimal(this.currentInput)
+    this.clearCurrentInput()
   }
 
   /**
    * Total two numbers together.
    */
-  private equals() {
+  private equals(): void {
     // Do nothing if there is no other number
-    if (this.previousInput === null) {
-      return;
-    }
+    if (this.previousInput === null) return
 
-    let result: Decimal;
+    let result: Decimal
 
     switch (this.lastOperator) {
-      case CalculatorFunctions.Add:
-        result = this.previousInput.plus(this.currentInput);
-        break;
-      case CalculatorFunctions.Subtract:
-        result = this.previousInput.minus(this.currentInput);
-        break;
-      case CalculatorFunctions.Multiply:
-        result = this.previousInput.times(this.currentInput);
-        break;
-      case CalculatorFunctions.Divide:
-        result = this.previousInput.dividedBy(this.currentInput);
-        break;
+      case calculatorFunctions.Add:
+        result = this.previousInput.plus(this.currentInput)
+        break
+      case calculatorFunctions.Subtract:
+        result = this.previousInput.minus(this.currentInput)
+        break
+      case calculatorFunctions.Multiply:
+        result = this.previousInput.times(this.currentInput)
+        break
+      case calculatorFunctions.Divide:
+        result = this.previousInput.dividedBy(this.currentInput)
+        break
     }
 
-    this.setCurrentInput(result);
+    this.setCurrentInput(result)
   }
 }
 
-let calculator = new Calculator();
+const calculator = new Calculator()
+calculator.attachClickEvents()
