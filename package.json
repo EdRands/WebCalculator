@@ -17,7 +17,6 @@
     "serve": "http-server --port 2020",
     "serve:silent": "http-server --port 2020 --silent",
     "serve:live": "parcel source/index.html --out-dir build --port 2020",
-    "serve:silent": "http-server --port 2020 --silent",
     "test": "start-server-and-test serve:silent http://localhost:2020 test:run",
     "test:live": "cypress open",
     "test:run": "cypress run"
